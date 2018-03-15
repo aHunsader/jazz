@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Jazz Website</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<meta name="_token" content="{{ csrf_token }}">
+</head>
+
+<script>
+	function call_spotify(){
+		var token = $('meta[name="_token"]').attr('content');
+		$.ajaxSetup({
+			beforeSend: function(xhr, settings){
+				if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type))
+                	xhr.setRequestHeader("X-CSRFToken", token)
+			}
+		});
+		$.ajax({
+			url: '/callSpotify/',
+			method: 'POST',
+		});
+	}
+</script>
+
+<body>
+	<h1>Find your least favorite jazz song</h1>
+	<button onclick="call_spotify()">this is a button</button>
+</body>
